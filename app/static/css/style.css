@@ -1,0 +1,19 @@
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+    .container {
+        padding: 0 15px;
+    }
+    .list-group-item {
+        font-size: 14px;
+    }
+}
+
+.btn-primary, .btn-danger, .btn-warning {
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.btn-primary:hover, .btn-danger:hover, .btn-warning:hover {
+    transform: scale(1.05);
+}

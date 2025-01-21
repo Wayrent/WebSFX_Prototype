@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Create Collection{% endblock %}
+{% block content %}
+<h2>Create New Collection</h2>
+<form action="{{ url_for('create_collection') }}" method="post">
+    <div class="form-group">
+        <label for="name">Collection Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+{% endblock %}

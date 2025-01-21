@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Favorites{% endblock %}
+{% block content %}
+<h2>Favorites</h2>
+<ul class="list-group">
+    {% for sound in sounds %}
+        <li class="list-group-item">
+            <h5>{{ sound.title }}</h5>
+            <p>Category: {{ sound.category }}</p>
+            <p>Tags: {{ sound.tags }}</p>
+            <p>Bitrate: {{ sound.bitrate }}</p>
+            <p>Quality: {{ sound.quality }}</p>
+            <p>Duration: {{ sound.duration }} seconds</p>
+            <audio controls>
+                <source src="{{ url_for('static', filename='uploads/' ~ sound.url) }}" type="audio/{{ sound.url.split('.')[-1] }}">
+                Your browser does not support the audio element.
+            </audio>
+            <a href="{{ url_for('download_sound', sound_id=sound.id) }}" class="btn btn-primary">Download</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

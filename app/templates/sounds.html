@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Sound Library{% endblock %}
+{% block content %}
+<h2>Sound Library</h2>
+<form method="get" action="{{ url_for('sounds') }}">
+    <div class="form-group">
+        <input type="text" class="form-control" name="search" placeholder="Search by title, category, or tags">
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+<ul class="list-group mt-3">
+    {% for sound in sounds %}
+        <li class="list-group-item">
+            <h5>{{ sound.title }}</h5>
+            <p>Category: {{ sound.category }}</p>
+            <p>Tags: {{ sound.tags }}</p>
+            <p>Bitrate: {{ sound.bitrate }}</p>
+            <p>Quality: {{ sound.quality }}</p>
+            <p>Duration: {{ sound.duration }} seconds</p>
+            <audio controls>
+                <source src="{{ url_for('static', filename='uploads/' ~ sound.url) }}" type="audio/{{ sound.url.split('.')[-1] }}">
+                Your browser does not support the audio element.
+            </audio>
+            <form action="{{ url_for('add_favorite', sound_id=sound.id) }}" method="post">
+                {% if sound in current_user.favorites %}
+                    <button type="submit" class="btn btn-danger">Remove from Favorites</button>
+                {% else %}
+                    <button type="submit" class="btn btn-primary">Add to Favorites</button>
+                {% endif %}
+            </form>
+            <a href="{{ url_for('download_sound', sound_id=sound.id) }}" class="btn btn-primary">Download</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

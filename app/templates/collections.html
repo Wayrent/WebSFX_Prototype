@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Collections{% endblock %}
+{% block content %}
+<h2>Your Collections</h2>
+<a class="btn btn-primary" href="{{ url_for('create_collection') }}">Create New Collection</a>
+<ul class="list-group mt-3">
+    {% for collection in collections %}
+        <li class="list-group-item">
+            <h5>{{ collection.name }}</h5>
+            <form action="{{ url_for('delete_collection', collection_id=collection.id) }}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Delete Collection</button>
+            </form>
+            <ul class="list-group mt-3">
+                {% for sound in collection.sounds %}
+                    <li class="list-group-item">
+                        {{ sound.title }}
+                        <form action="{{ url_for('remove_from_collection', sound_id=sound.id) }}" method="post" style="display:inline;">
+                            <input type="hidden" name="collection_id" value="{{ collection.id }}">
+                            <button type="submit" class="btn btn-warning">Remove Sound</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
