@@ -1,29 +1,33 @@
 from datetime import datetime
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, login
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128))
+    password_hash = db.Column(db.String(256))  # Увеличьте длину до 256
     sounds_downloaded = db.Column(db.Integer, default=0)
     subscribed = db.Column(db.Boolean, default=False)
     daily_downloads = db.Column(db.Integer, default=0)
     last_download = db.Column(db.DateTime, default=datetime.utcnow)
     is_admin = db.Column(db.Boolean, default=False)
 
-    def __repr__(self):
-        return f'<User {self.username}>'
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
-        # метод для проверки пароля, можно использовать bcrypt или werkzeug.security
-        pass
+        return check_password_hash(self.password_hash, password)
 
     def check_download_limit(self):
         if (datetime.utcnow() - self.last_download).days > 0:
             self.daily_downloads = 0
         return self.daily_downloads < 3 if not self.subscribed else self.daily_downloads < 15
+
+    def __repr__(self):
+        return f'<User {self.username}>'
 
 class Sound(db.Model):
     id = db.Column(db.Integer, primary_key=True)

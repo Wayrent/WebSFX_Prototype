@@ -17,3 +17,12 @@
 .btn-primary:hover, .btn-danger:hover, .btn-warning:hover {
     transform: scale(1.05);
 }
+
+/* Add some margin to buttons and audio elements */
+audio.mb-2 {
+    margin-bottom: 10px;
+}
+
+.d-flex.justify-content-between .btn {
+    margin-right: 10px;
+}
