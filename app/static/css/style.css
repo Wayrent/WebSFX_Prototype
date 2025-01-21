@@ -26,3 +26,57 @@ audio.mb-2 {
 .d-flex.justify-content-between .btn {
     margin-right: 10px;
 }
+
+.form-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+button.btn {
+    position: relative;
+}
+
+button.btn i {
+    margin-right: 5px;
+}
+
+button.btn[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+/* New styles for tags, bitrate, quality, and duration */
+.sound-characteristics span {
+    display: inline-block;
+    padding: 2px 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.sound-characteristics .tags {
+    color: #b5651d; /* New color for tags */
+}
+
+.sound-characteristics .bitrate {
+    color: #1d9bb5; /* New color for bitrate */
+}
+
+.sound-characteristics .quality {
+    color: #5bb51d; /* New color for quality */
+}
+
+.sound-characteristics .duration {
+    color: #b51d82; /* New color for duration */
+}

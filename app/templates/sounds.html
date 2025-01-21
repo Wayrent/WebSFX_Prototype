@@ -2,17 +2,27 @@
 {% block title %}Sound Library{% endblock %}
 {% block content %}
 <h2>Sound Library</h2>
-<form method="get" action="{{ url_for('sounds') }}">
-    <div class="form-group">
+<form method="get" action="{{ url_for('sounds') }}" class="form-container">
+    <div class="input-group flex-grow-1">
         <input type="text" class="form-control" name="search" placeholder="Search by title, category, or tags">
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary" title="Найти">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Search</button>
 </form>
 <ul class="list-group mt-3">
     {% for sound in sounds %}
         <li class="list-group-item d-flex flex-column">
             <h5>{{ sound.title }}</h5>
-            <p>{{ sound.category }} | Tags: {{ sound.tags }} | Bitrate: {{ sound.bitrate }} | Quality: {{ sound.quality }} | Duration: {{ sound.duration }} seconds</p>
+            <div class="sound-characteristics">
+                <span class="category">{{ sound.category }}</span> |
+                <span class="tags" style="color: #b5651d;">Tags: {{ sound.tags }}</span> |
+                <span class="bitrate" style="color: #1d9bb5;">Bitrate: {{ sound.bitrate }}</span> |
+                <span class="quality" style="color: #5bb51d;">Quality: {{ sound.quality }}</span> |
+                <span class="duration" style="color: #555880;">Duration: {{ sound.duration }} seconds</span>
+            </div>
             <audio controls class="mb-2">
                 <source src="{{ url_for('uploaded_file', filename=sound.url) }}" type="audio/{{ sound.url.split('.')[-1] }}">
                 Your browser does not support the audio element.
@@ -20,12 +30,12 @@
             <div class="d-flex justify-content-between">
                 <form action="{{ url_for('add_favorite', sound_id=sound.id) }}" method="post" class="mr-2">
                     {% if sound in current_user.favorites %}
-                        <button type="submit" class="btn btn-danger">Remove from Favorites</button>
+                        <button type="submit" class="btn btn-danger" title="Удалить из избранного"><i class="fas fa-heart-broken"></i></button>
                     {% else %}
-                        <button type="submit" class="btn btn-primary">Add to Favorites</button>
+                        <button type="submit" class="btn btn-primary" title="Добавить в избранное"><i class="fas fa-heart"></i></button>
                     {% endif %}
                 </form>
-                <a href="{{ url_for('download_sound', sound_id=sound.id) }}" class="btn btn-primary">Download</a>
+                <a href="{{ url_for('download_sound', sound_id=sound.id) }}" class="btn btn-primary" title="Скачать"><i class="fas fa-download"></i></a>
             </div>
         </li>
     {% endfor %}
